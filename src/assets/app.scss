@@ -1,0 +1,10 @@
+body.body--dark {
+  background: #1a1a2e; /* Deep dark blue background */
+  color: #e0e0e0;
+}
+
+/* Dark mode မှာ Header အရောင်ပြောင်းချင်ရင် */
+.body--dark .q-header {
+  background: #16213e !important;
+  color: white !important;
+}
