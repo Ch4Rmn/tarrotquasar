@@ -4,7 +4,7 @@
       <q-toolbar>
         <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
 
-        <q-toolbar-title>Tarrot </q-toolbar-title>
+        <q-toolbar-title>MP tarot </q-toolbar-title>
 
         <q-btn
           flat

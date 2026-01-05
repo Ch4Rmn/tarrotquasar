@@ -9,7 +9,8 @@
           dense
           placeholder="Search cards..."
           clearable
-          class="q-mb-md"
+          class="q-mb-md text-dark"
+          input-class="text-dark"
         >
           <template v-slot:prepend>
             <q-icon name="search" />

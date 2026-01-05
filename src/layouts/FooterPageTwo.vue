@@ -11,7 +11,14 @@
         align="justify"
         active-color="black"
       >
-        <q-route-tab class="text-white" name="home" icon="home" label="Home" to="/daily" />
+        <q-route-tab class="text-white" name="home" icon="home" label="Home" to="/" />
+        <q-route-tab
+          class="text-white"
+          name="daily"
+          icon="event_repeat"
+          label="Daily"
+          to="/daily"
+        />
 
         <q-route-tab class="text-white" name="map" icon="map" label="map" to="/map" />
         <q-route-tab
