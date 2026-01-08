@@ -100,7 +100,7 @@ export default defineConfig((ctx) => {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
       config: {
-        dark: 'false',
+        dark: 'auto',
         brand: {
           primary: '#1976d2',
           secondary: '#26A69A',
