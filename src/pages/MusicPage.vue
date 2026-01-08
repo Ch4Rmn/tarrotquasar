@@ -88,8 +88,8 @@
     </q-list>
 
     <div
-      class="fixed-bottom bg-grey-10 text-white q-pa-sm shadow-up-10"
-      style="bottom: 50px; z-index: 2000; border-top: 1px solid #333"
+      class="fixed-bottom music-player bg-grey-10 text-white q-pa-sm shadow-up-10"
+      style="z-index: 2000; border-top: 1px solid #333"
     >
       <div class="relative-position">
         <div

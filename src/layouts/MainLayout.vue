@@ -1,10 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="app-header">
       <q-toolbar>
         <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
 
-        <q-toolbar-title>MP tarot </q-toolbar-title>
+        <q-toolbar-title class="ellipsis">MP tarot</q-toolbar-title>
 
         <q-space />
 
@@ -16,7 +16,7 @@
         >
           <q-tooltip>Toggle Dark Mode</q-tooltip>
         </q-btn>
-        <div class="row items-center q-gutter-sm">
+        <div class="row items-center q-gutter-sm header-meta">
           <div class="column items-end" v-if="showTime || showWeather">
             <div class="text-caption" v-if="showTime">{{ timeText }}</div>
             <div class="text-caption text-grey-4" v-if="showWeather && weatherText">

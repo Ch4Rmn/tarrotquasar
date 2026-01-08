@@ -7,3 +7,31 @@ body.reduce-motion *::after {
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
+
+:root {
+  --app-safe-top: env(safe-area-inset-top);
+  --app-safe-bottom: env(safe-area-inset-bottom);
+}
+
+.app-header .q-toolbar {
+  padding-top: var(--app-safe-top);
+  min-height: calc(50px + var(--app-safe-top));
+}
+
+.app-footer {
+  padding-bottom: var(--app-safe-bottom);
+}
+
+.music-player {
+  bottom: calc(56px + var(--app-safe-bottom));
+}
+
+.header-meta {
+  max-width: 180px;
+}
+
+@media (max-width: 400px) {
+  .header-meta {
+    max-width: 140px;
+  }
+}

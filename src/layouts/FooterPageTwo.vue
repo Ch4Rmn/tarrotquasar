@@ -1,7 +1,7 @@
 <template>
   <!-- <q-layout view="lHh Lpr lFf"> -->
   <div>
-    <q-footer class="text-white glass-footer">
+    <q-footer class="text-white glass-footer app-footer">
       <q-tabs
         v-model="tab"
         no-caps
