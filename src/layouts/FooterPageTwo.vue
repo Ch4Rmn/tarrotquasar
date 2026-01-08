@@ -20,13 +20,13 @@
           to="/daily"
         />
 
-        <q-route-tab
+        <!-- <q-route-tab
           class="text-white"
           name="triple"
           icon="auto_awesome"
           label="Triple"
           to="/triple"
-        />
+        /> -->
 
         <q-route-tab class="text-white" name="music" icon="music_note" label="Music" to="/music" />
 
@@ -36,7 +36,7 @@
           name="settings"
           icon="settings"
           label="Setting"
-          to="/daily"
+          to="/setting"
         />
       </q-tabs>
 

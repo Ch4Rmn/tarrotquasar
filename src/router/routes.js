@@ -4,6 +4,7 @@ import MapPage from 'pages/MapPage.vue'
 import DailyPage from 'pages/DailyPage.vue'
 import MusicPage from 'pages/MusicPage.vue'
 import TripleCardPage from 'pages/TripleCardPage.vue'
+import SettingPage from 'pages/SettingPage.vue'
 import ErrorNotFound from 'pages/ErrorNotFound.vue'
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
       { path: 'daily', component: DailyPage },
       { path: 'music', component: MusicPage },
       { path: 'triple', component: TripleCardPage },
+      { path: 'setting', component: SettingPage },
     ],
   },
 

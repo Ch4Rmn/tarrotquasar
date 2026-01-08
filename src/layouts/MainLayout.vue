@@ -17,12 +17,16 @@
           <q-tooltip>Toggle Dark Mode</q-tooltip>
         </q-btn>
         <div class="row items-center q-gutter-sm">
-          <div class="column items-end">
-            <div class="text-caption">{{ timeText }}</div>
-            <div class="text-caption text-grey-4" v-if="weatherText">{{ weatherText }}</div>
-            <div class="text-caption text-grey-5" v-else-if="weatherError">Weather unavailable</div>
+          <div class="column items-end" v-if="showTime || showWeather">
+            <div class="text-caption" v-if="showTime">{{ timeText }}</div>
+            <div class="text-caption text-grey-4" v-if="showWeather && weatherText">
+              {{ weatherText }}
+            </div>
+            <div class="text-caption text-grey-5" v-else-if="showWeather && weatherError">
+              Weather unavailable
+            </div>
           </div>
-          <q-avatar v-if="weatherIcon" size="28px">
+          <q-avatar v-if="showWeather && weatherIcon" size="28px">
             <img :src="weatherIcon" alt="Weather" />
           </q-avatar>
           <!-- <q-select
@@ -81,6 +85,7 @@ const toggleDarkMode = () => {
 
 const WEATHER_API_KEY = '09f82d5ccd23f8c1471bd35fc02996a5'
 const WEATHER_LOCATION_KEY = 'weather:city'
+const SETTINGS_KEY = 'app:settings'
 // const cityOptions = [
 //   { label: 'Yangon', value: 'Yangon' },
 //   { label: 'Mandalay', value: 'Mandalay' },
@@ -98,6 +103,14 @@ const weatherIcon = ref('')
 const weatherError = ref(false)
 let timeTimerId = null
 let weatherTimerId = null
+const settings = ref({
+  showTime: true,
+  showWeather: true,
+})
+const handleSettingsUpdate = (event) => {
+  const next = event?.detail?.settings || loadSettings()
+  settings.value = { ...settings.value, ...next }
+}
 
 const timeText = computed(() =>
   new Intl.DateTimeFormat(undefined, {
@@ -108,6 +121,20 @@ const timeText = computed(() =>
     minute: '2-digit',
   }).format(now.value),
 )
+
+const showTime = computed(() => settings.value.showTime !== false)
+const showWeather = computed(() => settings.value.showWeather !== false)
+
+const loadSettings = () => {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY)
+    if (!raw) return {}
+    return JSON.parse(raw)
+  } catch (error) {
+    console.error('Settings load failed', error)
+    return {}
+  }
+}
 
 const weatherCodeText = (code) => {
   const map = {
@@ -183,26 +210,53 @@ const fetchWeather = async () => {
   }
 }
 
+const startWeatherPolling = () => {
+  if (weatherTimerId) clearInterval(weatherTimerId)
+  fetchWeather()
+  weatherTimerId = setInterval(fetchWeather, 15 * 60 * 1000)
+}
+
+const stopWeatherPolling = () => {
+  if (weatherTimerId) clearInterval(weatherTimerId)
+  weatherTimerId = null
+  weatherText.value = ''
+  weatherIcon.value = ''
+  weatherError.value = false
+}
+
 onMounted(() => {
   const savedCity = localStorage.getItem(WEATHER_LOCATION_KEY)
   if (savedCity) selectedCity.value = savedCity
+  settings.value = { ...settings.value, ...loadSettings() }
 
   timeTimerId = setInterval(() => {
     now.value = new Date()
   }, 60 * 1000)
-  fetchWeather()
-  weatherTimerId = setInterval(fetchWeather, 15 * 60 * 1000)
+  window.addEventListener('settings:updated', handleSettingsUpdate)
 })
 
 onUnmounted(() => {
   if (timeTimerId) clearInterval(timeTimerId)
   if (weatherTimerId) clearInterval(weatherTimerId)
+  window.removeEventListener('settings:updated', handleSettingsUpdate)
 })
 
 watch(selectedCity, (value) => {
   localStorage.setItem(WEATHER_LOCATION_KEY, value)
-  fetchWeather()
+  if (showWeather.value) fetchWeather()
 })
+
+watch(
+  showWeather,
+  (value) => {
+    if (value) {
+      startWeatherPolling()
+    } else {
+      stopWeatherPolling()
+    }
+  },
+  { immediate: true },
+)
 
 // const linksList = [
 //   {
