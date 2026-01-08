@@ -10,17 +10,8 @@
 <script setup>
 //
 import { useMeta } from 'quasar'
-import { useQuasar } from 'quasar'
 // import ThumbnailComponent from 'src/components/ThumbnailComponent.vue'
 import CardList from 'src/components/CardList.vue'
-
-const $q = useQuasar()
-
-$q.notify({
-  message: 'Jim pinged you.',
-  color: 'purple',
-  icon: 'announcement',
-})
 
 useMeta({
   // sets document title
@@ -40,14 +31,6 @@ useMeta({
       template(ogTitle) {
         return `${ogTitle} - My Website`
       },
-    },
-  },
-
-  // CSS tags
-  link: {
-    material: {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
     },
   },
 

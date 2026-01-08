@@ -56,9 +56,10 @@
       >
         <q-card class="my-card column no-shadow shadow-hover full-height">
           <q-img
-            :src="`https://www.sacred-texts.com/tarot/pkt/img/${card.name_short}.jpg`"
+            :src="getCardImage(card.name_short)"
             :ratio="2 / 3"
             class="rounded-borders"
+            :img-attrs="{ loading: 'lazy', decoding: 'async' }"
           >
             <div
               class="absolute-bottom text-center bg-grey-9 text-white q-py-xs"
@@ -164,6 +165,24 @@ const showNotify = (message, color, icon) => {
     position: 'top',
     timeout: 2000,
   })
+}
+
+const getCardImage = (shortName) => {
+  if (!shortName) return ''
+
+  const map = {
+    ar: 'm',
+    cu: 'c',
+    wa: 'w',
+    sw: 's',
+    pe: 'p',
+  }
+
+  const prefix = shortName.substring(0, 2)
+  const number = shortName.substring(2)
+  const newPrefix = map[prefix] || prefix
+
+  return `/cards/${newPrefix}${number}.jpg`
 }
 
 const fetchTarotCards = async () => {
