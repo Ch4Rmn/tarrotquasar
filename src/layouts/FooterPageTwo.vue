@@ -20,6 +20,8 @@
           to="/daily"
         />
 
+        <q-route-tab class="text-white" name="music" icon="music_note" label="Music" to="/music" />
+
         <q-route-tab class="text-white" name="map" icon="map" label="map" to="/map" />
         <q-route-tab
           class="text-white"

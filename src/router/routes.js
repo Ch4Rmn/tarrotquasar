@@ -6,6 +6,7 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'map', component: () => import('pages/MapPage.vue') },
       { path: 'daily', component: () => import('pages/DailyPage.vue') },
+      { path: 'music', component: () => import('pages/MusicPage.vue') },
     ],
   },
 

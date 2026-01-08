@@ -130,7 +130,8 @@ export default defineConfig((ctx) => {
         'LocalStorage',
         'Meta',
         'Notify',
-        'LocalStorage', // Data သိမ်းရန်
+        'LocalStorage',
+        'Loading', // Data သိမ်းရန်
       ],
     },
 
