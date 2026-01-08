@@ -28,7 +28,10 @@
     </q-drawer> -->
 
     <q-page-container>
-      <router-view />
+      <MusicPage v-show="$route.path === '/music'" />
+      <router-view v-slot="{ Component, route }">
+        <component v-if="route.path !== '/music'" :is="Component" />
+      </router-view>
     </q-page-container>
     <FooterPage />
   </q-layout>
@@ -39,6 +42,7 @@ import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 // import EssentialLink from 'components/EssentialLink.vue'
 import FooterPage from 'layouts/FooterPageTwo.vue'
+import MusicPage from 'pages/MusicPage.vue'
 
 const $q = useQuasar()
 

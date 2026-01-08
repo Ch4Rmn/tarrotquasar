@@ -182,6 +182,8 @@
 </template>
 
 <script setup>
+defineOptions({ name: 'MusicPage' })
+
 import { ref, onUnmounted, onMounted, nextTick, computed, watch } from 'vue'
 import WaveSurfer from 'wavesurfer.js'
 
