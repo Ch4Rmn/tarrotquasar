@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-2'">
+  <div class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-2'">
     <!-- Search and Filter Section -->
     <div class="row justify-center q-mb-md">
       <div class="col-12 col-md-12 q-px-sm" style="width: 100%">
@@ -116,7 +116,7 @@
         </q-card>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script setup>

@@ -1,12 +1,21 @@
+import MainLayout from 'layouts/MainLayout.vue'
+import IndexPage from 'pages/IndexPage.vue'
+import MapPage from 'pages/MapPage.vue'
+import DailyPage from 'pages/DailyPage.vue'
+import MusicPage from 'pages/MusicPage.vue'
+import TripleCardPage from 'pages/TripleCardPage.vue'
+import ErrorNotFound from 'pages/ErrorNotFound.vue'
+
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: 'map', component: () => import('pages/MapPage.vue') },
-      { path: 'daily', component: () => import('pages/DailyPage.vue') },
-      { path: 'music', component: () => import('pages/MusicPage.vue') },
+      { path: '', component: IndexPage },
+      { path: 'map', component: MapPage },
+      { path: 'daily', component: DailyPage },
+      { path: 'music', component: MusicPage },
+      { path: 'triple', component: TripleCardPage },
     ],
   },
 
@@ -14,7 +23,7 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
+    component: ErrorNotFound,
   },
 ]
 
