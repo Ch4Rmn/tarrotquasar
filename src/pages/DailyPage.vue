@@ -97,20 +97,33 @@ const todayDate = computed(() => {
 const getCardImage = (shortName) => {
   if (!shortName) return ''
 
-  // JSON (ar) -> File (m), JSON (cu) -> File (c)
-  const map = {
-    ar: 'm', // Major -> m00.jpg
-    cu: 'c', // Cups -> c01.jpg
-    wa: 'w', // Wands -> w01.jpg
-    sw: 's', // Swords -> s01.jpg
-    pe: 'p', // Pentacles -> p01.jpg
+  const suitMap = {
+    ar: 'm',
+    cu: 'c',
+    wa: 'w',
+    sw: 's',
+    pe: 'p',
+  }
+  const faceMap = {
+    ac: '01',
+    pa: '11',
+    kn: '12',
+    qu: '13',
+    ki: '14',
   }
 
-  const prefix = shortName.substring(0, 2)
-  const number = shortName.substring(2)
-  const newPrefix = map[prefix] || prefix
+  const code = shortName.toLowerCase()
+  const suit = code.substring(0, 2)
+  const tail = code.substring(2)
+  const prefix = suitMap[suit] || suit
 
-  return `/cards/${newPrefix}${number}.jpg`
+  if (/^\d+$/.test(tail)) {
+    return `/cards/${prefix}${tail.padStart(2, '0')}.jpg`
+  }
+  if (faceMap[tail]) {
+    return `/cards/${prefix}${faceMap[tail]}.jpg`
+  }
+  return ''
 }
 
 const fetchCards = async () => {
