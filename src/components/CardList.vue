@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" :class="$q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-2'">
+  <div class="q-pa-md no-scroll" :class="$q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-2'" style="overflow-y: hidden;">
     <!-- Search and Filter Section -->
     <div class="row justify-center q-mb-md">
       <div class="col-12 col-md-12 q-px-sm" style="width: 100%">
@@ -36,6 +36,11 @@
           spread
         />
       </div>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row justify-end q-mb-md">
+      <q-badge color="primary" text-color="white">{{ coc }}</q-badge>
     </div>
 
     <div v-if="loading" class="text-center">
@@ -118,19 +123,58 @@
       </div>
     </div>
   </div>
+
+  <!-- Floating Action Button -->
+  <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-fab
+      v-model="fab"
+      square
+      vertical-actions-align="right"
+      color="primary"
+      icon="share"
+      direction="left"
+      :class="{ 'text-white': $q.dark.isActive }"
+    >
+      <q-fab-action
+        square
+        color="green"
+        icon="phone"
+        @click="makeCall('+959xxxxxxxx')"
+        label="Call Us"
+        label-position="left"
+      />
+      <q-fab-action
+        square
+        color="purple"
+        icon="phone"
+        @click="openViber('+959xxxxxxxx')"
+        label="Viber"
+        label-position="left"
+      />
+      <q-fab-action
+        square
+        color="blue"
+        icon="facebook"
+        @click="openFacebook('your-facebook-page')"
+        label="Facebook"
+        label-position="left"
+      />
+    </q-fab>
+  </q-page-sticky>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useQuasar } from 'quasar' // Quasar Hook
+import { useQuasar } from 'quasar'
 import axios from 'axios'
 
-const $q = useQuasar() // Quasar ကို ခေါ်သုံးခြင်း
+const $q = useQuasar()
 
 const cards = ref([])
 const loading = ref(true)
 const categoryFilter = ref('all')
 const searchQuery = ref('')
+const fab = ref(false)
 const CACHE_KEY = 'tarot_cards_v1' // Cache နာမည်
 
 // Filter Logic
@@ -155,6 +199,8 @@ const filteredCards = computed(() => {
 
   return result
 })
+
+const coc = computed(() => filteredCards.value.length)
 
 // Notification ပြသည့် Function
 const showNotify = (message, color, icon) => {
@@ -211,6 +257,8 @@ const fetchTarotCards = async () => {
       cards.value = $q.localStorage.getItem(CACHE_KEY)
 
       showNotify('Data loaded from Cache', 'green', 'cloud_done')
+      console.log(cards.value._rawValue)
+
       loading.value = false
       return // Cache ရှိရင် ဒီမှာတင် ရပ်လိုက်မယ် (API ဆက်မခေါ်တော့ဘူး)
     }
@@ -219,6 +267,7 @@ const fetchTarotCards = async () => {
     console.log('Fetching from API...')
     const response = await axios.get('/data/cards.json', { baseURL: '' })
     cards.value = response.data.cards
+    // console.log(cards)
 
     // ၃။ ရလာတဲ့ Data ကို Cache ထဲ သိမ်းမယ်
     $q.localStorage.set(CACHE_KEY, cards.value)
@@ -235,12 +284,26 @@ const fetchTarotCards = async () => {
 onMounted(() => {
   fetchTarotCards()
 })
+
+// Social media functions
+const makeCall = (number) => {
+  window.location.href = `tel:${number}`
+}
+
+const openViber = (number) => {
+  window.open(`viber://chat?number=${encodeURIComponent(number)}`, '_blank')
+}
+
+const openFacebook = (page) => {
+  window.open(`https://facebook.com/${page}`, '_blank')
+}
 </script>
 
 <style scoped>
 /* Modern Scrollbar */
 .scroll-x::-webkit-scrollbar {
   height: 8px;
+  display: none;
 }
 .scroll-x::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -252,6 +315,11 @@ onMounted(() => {
 }
 .scroll-x::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+/* Hide scrollbar but keep horizontal scroll */
+.scroll-x {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* Card Container and Height */
